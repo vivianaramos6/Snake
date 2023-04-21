@@ -8,6 +8,8 @@ void ofApp::setup(){
     gameState = new GameState();
     menuState = new MenuState();
     currentState = menuState;
+    //loading song
+    music.load("musiquita.mp3");
 
 }
 
@@ -15,6 +17,7 @@ void ofApp::setup(){
 void ofApp::update(){
     if(currentState->hasFinished()) {
         if(currentState->getNextState() == "GameState") {
+            music.play();
             gameState->reset();
             currentState = gameState;
         } else if(currentState->getNextState() == "MenuState") {
