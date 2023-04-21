@@ -15,6 +15,7 @@ private:
     std::vector<std::vector<int>> body;
     Direction direction;
     int boardSizeWidth, boardSizeHeight;
+    int bodyCounter = 0; 
     int segmentSize;
     bool crashed;
 
@@ -39,5 +40,12 @@ public:
     }
     std::vector<std::vector<int>> getBody() {
         return this->body;
+    }
+    int getCounter(){
+        return bodyCounter; 
+    }
+    int addTen(){
+        bodyCounter+=10;
+        return bodyCounter;  
     }
 };

@@ -3,6 +3,7 @@
 #include "State.h"
 #include "Snake.h"
 #include "ofMain.h"
+#include "ofTrueTypeFont.h"
 
 class GameState : public State {
     public:
@@ -27,5 +28,6 @@ class GameState : public State {
 
         int boardSizeWidth, boardSizeHeight;
         int cellSize; // Pixels
-        
+
+        ofTrueTypeFont score; 
 };

@@ -62,7 +62,11 @@ void Snake::draw() {
     for (int i = 0; i < body.size(); i++) {
         int curX = this->body[i][0];
         int curY = this->body[i][1];
-        ofSetColor(ofColor::white);
+        if (i == 0){
+            ofSetColor(ofColor::white);
+        }else{
+        ofSetColor(225,196,255);
+        }
         ofDrawRectangle(curX * segmentSize, curY * segmentSize, segmentSize, segmentSize);
     }
 }
@@ -95,6 +99,7 @@ void Snake::checkSelfCrash() {
 void Snake::grow() {
     vector<int> newSegment = this->getTail();
     this->body.push_back(newSegment);
+    bodyCounter+=10; //adds 10 to the score when the body grows.  
 }
 
 //snake looses one piece
