@@ -7,6 +7,7 @@ GameState::GameState() {
     boardSizeWidth = 64;
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
+    score.load("gameFont.ttf", 15);
 }
 //--------------------------------------------------------------
 GameState::~GameState() {
@@ -45,11 +46,12 @@ void GameState::draw() {
     drawBoardGrid();
     snake->draw();
     drawFood();
+    score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
 }
 //--------------------------------------------------------------
 void GameState::keyPressed(int key) {
 
-    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN) { return; }
+    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN && key != 'a') { return; }
 
     switch(key) {
         case OF_KEY_LEFT:
@@ -63,6 +65,9 @@ void GameState::keyPressed(int key) {
             break;
         case OF_KEY_DOWN:
             snake->changeDirection(DOWN);
+            break;
+        case 'a':
+            snake->addTen();
             break;
     }
 }
