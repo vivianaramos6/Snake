@@ -96,3 +96,8 @@ void Snake::grow() {
     vector<int> newSegment = this->getTail();
     this->body.push_back(newSegment);
 }
+
+void Snake::shrink(){
+     vector<int> newSegment = this->getTail();
+    this->body.pop_back();
+}
