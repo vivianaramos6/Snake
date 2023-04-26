@@ -63,7 +63,7 @@ void Snake::draw() {
         int curX = this->body[i][0];
         int curY = this->body[i][1];
         if (i == 0){
-            ofSetColor(ofColor::white);
+            ofSetColor(ofColor::blueViolet);
         }else{
         ofSetColor(225,196,255);
         }

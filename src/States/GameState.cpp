@@ -25,7 +25,7 @@ void GameState::reset() {
 void GameState::update() {
 
     if(snake->isCrashed()) {
-        this->setNextState("MenuState");
+        this->setNextState("LoseState");
         this->setFinished(true);
         return;
     }
@@ -111,16 +111,16 @@ void GameState::drawStartScreen() {
     return;
 }
 //--------------------------------------------------------------
-void GameState::drawLostScreen() {
-    ofSetColor(ofColor::black);
-    ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
-    ofSetColor(ofColor::white);
-    string text = "You lost! Press any arrow key to play again";
-    string text2 = "or press ESC to exit.";
-    ofDrawBitmapString(text, ofGetWidth()/2-8*text.length()/2, ofGetHeight()/2-11);
-    ofDrawBitmapString(text2, ofGetWidth()/2-8*text2.length()/2, ofGetHeight()/2+2);
-    return;
-}
+// void GameState::drawLostScreen() {
+//     ofSetColor(ofColor::black);
+//     ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
+//     ofSetColor(ofColor::white);
+//     string text = "You lost! Press any arrow key to play again";
+//     string text2 = "or press ESC to exit.";
+//     ofDrawBitmapString(text, ofGetWidth()/2-8*text.length()/2, ofGetHeight()/2-11);
+//     ofDrawBitmapString(text2, ofGetWidth()/2-8*text2.length()/2, ofGetHeight()/2+2);
+//     return;
+// }
 //--------------------------------------------------------------
 void GameState::drawBoardGrid() {
     
