@@ -23,6 +23,8 @@ public:
     Snake(int segmentSize, int boardSizeW, int boardSizeH);
     ~Snake();
 
+    void pausedSnake();
+
     void update();
     void draw();
     void changeDirection(Direction d);

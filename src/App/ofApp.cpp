@@ -10,6 +10,9 @@ void ofApp::setup(){
     loseState= new LoseState();
     currentState = menuState;
 
+    
+    //ofRectangle continueButtonRect(ofGetWidth()/2-95, ofGetHeight()/2, 200, 200);
+
     //loading song
     music.load("musiquita.mp3");
 
@@ -40,6 +43,9 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     currentState->draw();
+    
+     //ofSetColor(ofColor::red);
+     //ofDrawRectangle(ofGetWidth()/2-40, ofGetHeight()/2+70, 75, 75);
 }
 
 //--------------------------------------------------------------
@@ -47,3 +53,17 @@ void ofApp::keyPressed(int key){
     currentState->keyPressed(key);
 }
 //--------------------------------------------------------------
+
+void ofApp::mousePressed(int x,int y, int button){
+    currentState->mousePressed(x,y,button);
+   
+    
+    // if(button==OF_MOUSE_BUTTON_LEFT){
+    
+    //     if(continueButtonRect.inside(x, y)) {
+    //         gameState->setNotPaused();
+    //     }
+    // }
+
+
+}

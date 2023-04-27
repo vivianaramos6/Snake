@@ -8,6 +8,7 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     score.load("gameFont.ttf", 15);
+    continueButton.load("continue_button.png");
 }
 //--------------------------------------------------------------
 GameState::~GameState() {
@@ -23,6 +24,10 @@ void GameState::reset() {
 }
 //--------------------------------------------------------------
 void GameState::update() {
+    if(paused){
+        return;
+    }
+    else{
 
     if(snake->isCrashed()) {
         this->setNextState("LoseState");
@@ -39,6 +44,7 @@ void GameState::update() {
     if(ofGetFrameNum() % 10 == 0) {
         snake->update();
     }
+    }
 
 }
 //--------------------------------------------------------------
@@ -46,12 +52,15 @@ void GameState::draw() {
     drawBoardGrid();
     snake->draw();
     drawFood();
-    score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
+    score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25);
+    if(paused) {
+        isPaused();//added the score display in the game using a getter. 
+}
 }
 //--------------------------------------------------------------
 void GameState::keyPressed(int key) {
 
-    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN && key !='u' && key != 'a') { return; }
+    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN && key !='u' && key != 'a' && !-'p') { return; }
 
     switch(key) {
         case OF_KEY_LEFT:
@@ -75,6 +84,10 @@ void GameState::keyPressed(int key) {
         case 'a':
             snake->addTen();
             break;
+        case 'p':
+        paused=!paused;
+        
+        break;
     }
 }
 //--------------------------------------------------------------
@@ -111,6 +124,40 @@ void GameState::drawStartScreen() {
     return;
 }
 //--------------------------------------------------------------
+void GameState::isPaused(){
+    if(paused){
+        
+         ofSetColor(0,0,0,200);
+    ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
+
+    ofSetColor(255);
+        continueButton.draw(ofGetWidth()/2-95,ofGetHeight()/2,200,200);
+    
+
+    }
+    else{
+        return;
+    }
+
+
+}
+//--------------------------------------------------------------
+void GameState::mousePressed(int x, int y, int button){
+
+ofRectangle continueButtonRect(ofGetWidth()/2-40, ofGetHeight()/2+70, 75, 75);
+    if(button==OF_MOUSE_BUTTON_LEFT){
+    
+        if(continueButtonRect.inside(x, y)) {
+          paused=false;
+        }
+    }
+}
+
+
+
+
+
+
 // void GameState::drawLostScreen() {
 //     ofSetColor(ofColor::black);
 //     ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());

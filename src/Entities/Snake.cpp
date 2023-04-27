@@ -107,3 +107,4 @@ void Snake::shrink(){
      vector<int> newSegment = this->getTail();
     this->body.pop_back();
 }
+

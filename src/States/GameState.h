@@ -6,7 +6,13 @@
 #include "ofTrueTypeFont.h"
 
 class GameState : public State {
+
+    private:
+        bool paused=false;
+
     public:
+
+        ofRectangle continueButtonRect;
         GameState();
         ~GameState();
         void reset();
@@ -18,6 +24,8 @@ class GameState : public State {
         void drawStartScreen();
         void drawLostScreen();
         void drawBoardGrid();
+        void isPaused();
+        void mousePressed(int x, int y, int button);
 
         Snake* snake;
         
@@ -30,4 +38,7 @@ class GameState : public State {
         int cellSize; // Pixels
 
         ofTrueTypeFont score; 
+        ofImage continueButton;
+
+        bool setNotPaused() {return paused=false;}
 };
