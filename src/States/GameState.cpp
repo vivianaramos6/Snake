@@ -45,6 +45,7 @@ void GameState::update() {
 void GameState::draw() {
     drawBoardGrid();
     snake->draw();
+    staticEntity->drawObject(snake->getHead()[0], snake->getHead()[1]);
     drawFood();
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
 }
