@@ -5,11 +5,12 @@
 #include "GameState.h"
 #include "MenuState.h"
 #include "LoseState.h"
+#include "PauseState.h"
 
 class ofApp : public ofBaseApp{
 
 	public:
-
+		bool fromPause = false;
 		//ofRectangle continueButtonRect;
 		void setup();
 		void update();
@@ -31,6 +32,7 @@ class ofApp : public ofBaseApp{
 		GameState* gameState;
 		MenuState* menuState;
 		LoseState* loseState;
+		PauseState* pauseState;
 		ofSoundPlayer music;
 		
 };

@@ -8,7 +8,7 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     score.load("gameFont.ttf", 15);
-    continueButton.load("continue_button.png");
+    
 }
 //--------------------------------------------------------------
 GameState::~GameState() {
@@ -53,9 +53,7 @@ void GameState::draw() {
     snake->draw();
     drawFood();
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25);
-    if(paused) {
-        isPaused();//added the score display in the game using a getter. 
-}
+    
 }
 //--------------------------------------------------------------
 void GameState::keyPressed(int key) {
@@ -85,7 +83,10 @@ void GameState::keyPressed(int key) {
             snake->addTen();
             break;
         case 'p':
-        paused=!paused;
+         this->setNextState("PauseState");
+        this->setFinished(true);
+        return;
+        
         
         break;
     }
@@ -124,23 +125,7 @@ void GameState::drawStartScreen() {
     return;
 }
 //--------------------------------------------------------------
-void GameState::isPaused(){
-    if(paused){
-        
-         ofSetColor(0,0,0,200);
-    ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
 
-    ofSetColor(255);
-        continueButton.draw(ofGetWidth()/2-95,ofGetHeight()/2,200,200);
-    
-
-    }
-    else{
-        return;
-    }
-
-
-}
 //--------------------------------------------------------------
 void GameState::mousePressed(int x, int y, int button){
 
@@ -158,16 +143,6 @@ ofRectangle continueButtonRect(ofGetWidth()/2-40, ofGetHeight()/2+70, 75, 75);
 
 
 
-// void GameState::drawLostScreen() {
-//     ofSetColor(ofColor::black);
-//     ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
-//     ofSetColor(ofColor::white);
-//     string text = "You lost! Press any arrow key to play again";
-//     string text2 = "or press ESC to exit.";
-//     ofDrawBitmapString(text, ofGetWidth()/2-8*text.length()/2, ofGetHeight()/2-11);
-//     ofDrawBitmapString(text2, ofGetWidth()/2-8*text2.length()/2, ofGetHeight()/2+2);
-//     return;
-// }
 //--------------------------------------------------------------
 void GameState::drawBoardGrid() {
     

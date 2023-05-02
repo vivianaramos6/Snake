@@ -24,7 +24,6 @@ class GameState : public State {
         void drawStartScreen();
         void drawLostScreen();
         void drawBoardGrid();
-        void isPaused();
         void mousePressed(int x, int y, int button);
 
         Snake* snake;
@@ -41,4 +40,5 @@ class GameState : public State {
         ofImage continueButton;
 
         bool setNotPaused() {return paused=false;}
+
 };

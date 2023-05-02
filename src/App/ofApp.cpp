@@ -8,6 +8,7 @@ void ofApp::setup(){
     gameState = new GameState();
     menuState = new MenuState();
     loseState= new LoseState();
+    pauseState= new PauseState();
     currentState = menuState;
 
     
@@ -22,20 +23,38 @@ void ofApp::setup(){
 void ofApp::update(){
     if(currentState->hasFinished()) {
         if(currentState->getNextState() == "GameState") {
-            music.play();
-            music.setLoop(true);
-            gameState->reset();
-            currentState = gameState;
+            if(fromPause){
+                fromPause = false;
+                // music.play();
+                // music.setLoop(true);
+                currentState = gameState;
+                currentState->setNextState("");
+                currentState->setFinished(false);
+            }else{
+                music.play();
+                music.setLoop(true);
+                gameState->reset();
+                currentState = gameState;
+            }
         } else if(currentState->getNextState() == "MenuState") {
+            fromPause = false;
             music.stop();
             menuState->reset();
             currentState = menuState;
         }
         else if(currentState->getNextState() == "LoseState"){
+            fromPause = false;
             music.stop();
             loseState->reset();
             currentState=loseState;
         }
+        else if(currentState->getNextState()=="PauseState"){
+            fromPause = true;
+            pauseState->reset();
+            currentState=pauseState;
+
+        }
+
 
     }
     currentState->update();

@@ -2,6 +2,8 @@
 
 #include "State.h"
 #include "ofMain.h"
+#include "Snake.h"
+#include "ofTrueTypeFont.h"
 
 
 class LoseState : public State {
@@ -14,5 +16,7 @@ class LoseState : public State {
     void draw();
     void keyPressed(int key);
     void mousePressed(int x, int y, int button){}
+    ofTrueTypeFont score; 
+    Snake* snake;
 
 };
