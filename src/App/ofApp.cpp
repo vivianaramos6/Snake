@@ -19,6 +19,7 @@ void ofApp::update(){
         if(currentState->getNextState() == "GameState") {
             music.play();
             gameState->reset();
+            gameState = new GameState();
             currentState = gameState;
         } else if(currentState->getNextState() == "MenuState") {
             music.stop();

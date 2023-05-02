@@ -32,6 +32,9 @@ public:
     bool isCrashed() {
         return this->crashed;
     }
+    void setCrashed(){
+        crashed = !crashed;
+    }
     std::vector<int> getHead() {
         return this->body[0];
     }

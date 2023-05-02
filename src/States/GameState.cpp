@@ -8,6 +8,13 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     score.load("gameFont.ttf", 15);
+    for (int i = 0; i<ofRandom(5, 8); i++){
+        obstacleX = ofRandom(1,boardSizeWidth-1);
+        obstacleY = ofRandom(1, boardSizeHeight-1);
+        obstacleType = ofRandom(1, 3);
+        obstacles.push_back(new StaticEntity(obstacleX*25, obstacleY*25, cellSize, obstacleType));
+        
+    }
 }
 //--------------------------------------------------------------
 GameState::~GameState() {
@@ -38,6 +45,9 @@ void GameState::update() {
     foodSpawner();
     if(ofGetFrameNum() % 10 == 0) {
         snake->update();
+        for (StaticEntity* obs : obstacles){
+            obs->checkCrashed(snake);
+        }
     }
 
 }
@@ -45,7 +55,9 @@ void GameState::update() {
 void GameState::draw() {
     drawBoardGrid();
     snake->draw();
-    staticEntity->drawObject(snake->getHead()[0], snake->getHead()[1]);
+    for (StaticEntity* obs : obstacles){
+        obs->drawObject(snake);
+    }
     drawFood();
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
 }

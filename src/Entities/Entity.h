@@ -1,9 +1,10 @@
 #pragma once
+#include "Snake.h"
 
 class Entity{
     public:
-        virtual void drawObject() = 0;
-        virtual void objectSpawner() = 0;
-        virtual bool checkCrashed(int x, int y) = 0;
+        virtual void drawObject(Snake* snake) = 0;
+        virtual void objectSpawner(int x, int y) = 0;
+        virtual void checkCrashed(Snake* snake) = 0;
         
 };

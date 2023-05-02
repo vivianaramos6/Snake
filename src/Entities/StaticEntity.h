@@ -1,24 +1,41 @@
 #pragma once
 #include "Entity.h"
 #include "ofMain.h"
+#include "Snake.h"
+#include <string>
 
 class StaticEntity: public Entity{
     private:
-        int randomX = 50;//ofRandom(ofGetWidth()/64);
-        int randomY =  50;//ofRandom(ofGetHeight()/36);
+        int x;
+        int y;
+        int type;
         int cellsize;
-        //ofImage rock;
+        Snake* snake;
+        ofImage rockImage;
         bool draw;
     public:
-        StaticEntity();
-        StaticEntity(int x, int y, int cellsize);
-        void drawObject(int x, int y);
+        StaticEntity(int x, int y, int cellsize, int type);
+        ~StaticEntity();
+        void drawObject(Snake* snake);
         void objectSpawner(int x, int y);
-        bool checkCrashed(int x, int y);
+        void checkCrashed(Snake* snake);
         bool setDraw(){
             return !draw;
         }
 
-        void rock();
-        vector<vector<int>> rockList;
+        void rock(int x, int y);
+        void flower(int x, int y);
+
+        int getX(){
+            return x;
+        }
+        int getY(){
+            return y;
+        }
+        int getType(){
+            return type;
+        }
+        int getCellSize(){
+            return cellsize;
+        }
 };
