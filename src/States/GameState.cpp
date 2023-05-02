@@ -46,6 +46,7 @@ void GameState::draw() {
     drawBoardGrid();
     snake->draw();
     drawFood();
+    ofSetColor(255,0,0);
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
 }
 //--------------------------------------------------------------
@@ -96,9 +97,22 @@ void GameState::foodSpawner() {
 }
 //--------------------------------------------------------------
 void GameState::drawFood() {
-    ofSetColor(ofColor::red);
+    ofSetColor(red,blue,green);
     if(foodSpawned) {
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+        decay--;
+        count++;
+        while (red >=196){
+            //if (count%7 == 0){
+                red -= 0.5;
+        }
+        while (blue <= 164){
+                blue += 0.5;
+        }
+        while (green <= 132){
+                green += 0.5;
+        }
+            //}
     }
 }
 //--------------------------------------------------------------

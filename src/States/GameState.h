@@ -29,5 +29,11 @@ class GameState : public State {
         int boardSizeWidth, boardSizeHeight;
         int cellSize; // Pixels
 
-        ofTrueTypeFont score; 
+        ofTrueTypeFont score;
+
+        int decay = 900;  
+        int red = 255;
+        int blue = 0;
+        int green = 0;
+        int count = 0;
 };
