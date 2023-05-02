@@ -6,6 +6,7 @@ StaticEntity::StaticEntity(int x, int y, int cellsize, int type){
     this->cellsize = cellsize;
     this->type = type;
     rockImage.load("rock.png");
+    treeImage.load("tree.png");
 }
 
 void StaticEntity::drawObject(Snake* snake){
@@ -24,17 +25,16 @@ void StaticEntity::drawObject(Snake* snake){
 StaticEntity::~StaticEntity(){}
 
 void StaticEntity::rock(int x, int y){
-    ofSetColor(120 );
-    ofDrawRectangle(x, y, this->getCellSize()*2,this->getCellSize()*2 );
+    ofSetColor(255);
+    // ofDrawRectangle(x, y, this->getCellSize()*2,this->getCellSize()*2 );
+    rockImage.draw(x, y, this->getCellSize(), this->getCellSize());
     
 }
 
 void StaticEntity::flower(int x, int y){
-    ofSetColor(255,182,193);
-    ofDrawRectangle(x, y, this->getCellSize(), this->getCellSize()*3);
-    ofDrawRectangle(x-25, y+25, this->getCellSize()*3, this->getCellSize());
-    ofSetColor(253,253,150);
-    ofDrawRectangle(x, y+25, this->getCellSize(), this->getCellSize());
+    ofSetColor(255);
+    treeImage.draw(x, y, this->getCellSize(), this->getCellSize());
+    
 }
 
 void StaticEntity::objectSpawner(int x, int y){
@@ -49,6 +49,6 @@ void StaticEntity::objectSpawner(int x, int y){
 
 void StaticEntity::checkCrashed(Snake* snake){
     if (snake->getHead()[0]==this->getX() && snake->getHead()[1] == this->getY()){
-        snake->setCrashed();
+        snake->setCrashed(); 
     }
 }

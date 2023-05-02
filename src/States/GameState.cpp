@@ -8,7 +8,7 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     score.load("gameFont.ttf", 15);
-    for (int i = 0; i<ofRandom(5, 8); i++){
+    for (int i = 0; i<ofRandom(20, 30); i++){
         obstacleX = ofRandom(1,boardSizeWidth-1);
         obstacleY = ofRandom(1, boardSizeHeight-1);
         obstacleType = ofRandom(1, 3);
@@ -60,6 +60,7 @@ void GameState::draw() {
     }
     drawFood();
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
+    ofDrawBitmapString("crashed: " + to_string(snake->isCrashed()), ofGetWidth()/2, 30);
 }
 //--------------------------------------------------------------
 void GameState::keyPressed(int key) {

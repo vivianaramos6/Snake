@@ -12,6 +12,7 @@ class StaticEntity: public Entity{
         int cellsize;
         Snake* snake;
         ofImage rockImage;
+        ofImage treeImage; 
         bool draw;
     public:
         StaticEntity(int x, int y, int cellsize, int type);
