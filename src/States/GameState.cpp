@@ -20,6 +20,10 @@ void GameState::reset() {
     foodSpawned = false;
     setFinished(false);
     setNextState("");
+    decay = ofGetFrameRate() * 10;  
+    red = 255;
+    blue = 0;
+    green = 0;
 }
 //--------------------------------------------------------------
 void GameState::update() {
@@ -39,12 +43,26 @@ void GameState::update() {
     if(ofGetFrameNum() % 10 == 0) {
         snake->update();
     }
+    if (decay == 0){
+        foodSpawned = false;
+        decay = ofGetFrameRate() * 10;  
+        red = 255;
+        blue = 0;
+        green = 0;
+    }
+    decay--;
+    if (ofGetFrameNum()%4  == 0){
+            red -= 0.8;
+            blue += 0.8;
+            green += 0.8;
+    }
 
 }
 //--------------------------------------------------------------
 void GameState::draw() {
     drawBoardGrid();
     snake->draw();
+    ofSetColor(red,blue,green);
     drawFood();
     ofSetColor(255,0,0);
     score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25); //added the score display in the game using a getter. 
@@ -97,22 +115,8 @@ void GameState::foodSpawner() {
 }
 //--------------------------------------------------------------
 void GameState::drawFood() {
-    ofSetColor(red,blue,green);
     if(foodSpawned) {
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
-        decay--;
-        count++;
-        while (red >=196){
-            //if (count%7 == 0){
-                red -= 0.5;
-        }
-        while (blue <= 164){
-                blue += 0.5;
-        }
-        while (green <= 132){
-                green += 0.5;
-        }
-            //}
     }
 }
 //--------------------------------------------------------------
