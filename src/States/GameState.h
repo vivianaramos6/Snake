@@ -2,9 +2,11 @@
 
 #include "State.h"
 #include "Snake.h"
+#include "StaticEntity.h"
 #include "ofMain.h"
 #include "ofTrueTypeFont.h"
 #include <string>
+#include <vector>
 
 class GameState : public State {
 
@@ -40,6 +42,12 @@ class GameState : public State {
         int cellSize; // Pixels
 
         ofTrueTypeFont scoreText; 
+        bool check = true;
+
+        int obstacleX;
+        int obstacleY;
+        int obstacleType; 
+        vector<StaticEntity* > obstacles; 
         ofImage continueButton;
 
         bool setNotPaused() {return paused=false;}

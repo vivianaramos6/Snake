@@ -8,6 +8,13 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     scoreText.load("gameFont.ttf", 15);
+    for (int i = 0; i<ofRandom(20, 30); i++){
+        obstacleX = ofRandom(1,boardSizeWidth-1);
+        obstacleY = ofRandom(1, boardSizeHeight-1);
+        obstacleType = ofRandom(1, 3);
+        obstacles.push_back(new StaticEntity(obstacleX*25, obstacleY*25, cellSize, obstacleType));
+        
+    }
     powerupText.load("gameFond.ttf", 15);
     speedOn = false;
     powerup = "";
@@ -66,7 +73,37 @@ void GameState::update() {
     else {fps = 10;}
     if(ofGetFrameNum() % fps == 0) {
         snake->update();
+        for (StaticEntity* obs : obstacles){
+            if (obs->checkCrashed(snake)){
+                this->setNextState("MenuState");
+                this->setFinished(true);
+                return;
+            }
+        }
     }
+    }
+    if (score == 60){
+        powerup = "SPEEDON!";
+    }
+    else if(score == 110){
+        powerup="BETTERAPPLE!";
+          
+         
+    }
+
+    
+    if (decay == 0){
+        foodSpawned = false;
+        decay = ofGetFrameRate() * 10;  
+        red = 255;
+        blue = 0;
+        green = 0;
+    }
+    decay--;
+    if (ofGetFrameNum()%4  == 0){
+            red -= 0.8;
+            blue += 0.8;
+            green += 0.8;
     }
     if (score == 60){
         powerup = "SPEEDON!";
@@ -97,6 +134,9 @@ void GameState::update() {
 void GameState::draw() {
     drawBoardGrid();
     snake->draw();
+    for (StaticEntity* obs : obstacles){
+        obs->drawObject(snake);
+    }
     ofSetColor(red,blue,green);
     drawFood();
     ofSetColor(255,0,0);

@@ -33,7 +33,8 @@ void ofApp::update(){
                 music.play();
                 music.setLoop(true);
                 gameState->reset();
-                currentState = gameState;
+                gameState = new GameState();
+            currentState = gameState;
             }
         } else if(currentState->getNextState() == "MenuState") {
             fromPause = false;
