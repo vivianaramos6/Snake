@@ -50,8 +50,13 @@ class GameState : public State {
         bool speedOn;
         bool betterApple;
         int timer;
-        int fps; 
+        int fps;
 
 
 
+
+        int decay = ofGetFrameRate() * 30;  
+        int red = 255;
+        int blue = 0;
+        int green = 0;
 };
