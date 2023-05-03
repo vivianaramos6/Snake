@@ -45,6 +45,7 @@ class GameState : public State {
         bool setNotPaused() {return paused=false;}
 
         string powerup;
+        bool powerupON;
         ofTrueTypeFont powerupText;
 
         bool speedOn;

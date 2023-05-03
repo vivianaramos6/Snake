@@ -9,6 +9,7 @@ GameState::GameState() {
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     scoreText.load("gameFont.ttf", 15);
     powerupText.load("gameFond.ttf", 15);
+    powerupON = false; 
     speedOn = false;
     powerup = "";
     fps = 0;
@@ -70,6 +71,11 @@ void GameState::update() {
     }
     if (score == 60){
         powerup = "SPEEDON!";
+        powerupON = false;
+        decay = ofGetFrameRate() * 30;  
+        red = 255;
+        blue = 0;
+        green = 0; 
     }
     else if(score == 110){
         powerup="BETTERAPPLE!";
@@ -80,16 +86,18 @@ void GameState::update() {
     
     if (decay == 0){
         foodSpawned = false;
-        decay = ofGetFrameRate() * 10;  
+        decay = ofGetFrameRate() * 30;  
         red = 255;
         blue = 0;
         green = 0;
     }
-    decay--;
+    if (!powerupON){
+        decay--;
+    }
     if (ofGetFrameNum()%4  == 0){
-            red -= 0.8;
-            blue += 0.8;
-            green += 0.8;
+            red -= 0.3;
+            blue += 0.3;
+            green += 0.3;
     }
 
 }
@@ -132,26 +140,28 @@ void GameState::keyPressed(int key) {
             score+=10;
             break;
         case 'p':
-         this->setNextState("PauseState");
-        this->setFinished(true);
-        return;
-        
-        
-        break;
+            this->setNextState("PauseState");
+            this->setFinished(true);
+            return;
+            break;
         case 'b':
-        if(powerup!=""){
-            if(powerup=="SPEEDON!"){
-                speedOn=true;
-                timer=ofGetElapsedTimef();
+            if(powerup!=""){
+                if(powerup=="SPEEDON!"){
+                    speedOn=true;
+                    timer=ofGetElapsedTimef();
+                    break;
                 
-            }
-            else if(powerup=="BETTERAPPLE!"){
-                snake->grow();
-                snake->grow();
-                 powerup="";
-            }
-            powerup="";
-        } 
+                }
+                else if(powerup=="BETTERAPPLE!"){
+                    snake->grow();
+                    snake->grow();
+                    powerup="";
+                    break;
+                }
+                powerup="";
+                break;
+            } 
+            break;
         
     }
 }
@@ -181,6 +191,7 @@ void GameState::drawFood() {
     else if(foodSpawned && score==50){
          ofSetColor(ofColor::yellow);
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+        powerupON = true;
 
     }
     else if(foodSpawned && score==100){
