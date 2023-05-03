@@ -19,7 +19,7 @@ class StaticEntity: public Entity{
         ~StaticEntity();
         void drawObject(Snake* snake);
         void objectSpawner(int x, int y);
-        void checkCrashed(Snake* snake);
+        bool checkCrashed(Snake* snake);
         bool setDraw(){
             return !draw;
         }

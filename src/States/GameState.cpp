@@ -46,7 +46,11 @@ void GameState::update() {
     if(ofGetFrameNum() % 10 == 0) {
         snake->update();
         for (StaticEntity* obs : obstacles){
-            obs->checkCrashed(snake);
+            if (obs->checkCrashed(snake)){
+                this->setNextState("MenuState");
+                this->setFinished(true);
+                return;
+            }
         }
     }
 

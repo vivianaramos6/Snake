@@ -47,8 +47,9 @@ void StaticEntity::objectSpawner(int x, int y){
     //}   
 }
 
-void StaticEntity::checkCrashed(Snake* snake){
+bool StaticEntity::checkCrashed(Snake* snake){
     if (snake->getHead()[0]==this->getX() && snake->getHead()[1] == this->getY()){
-        snake->setCrashed(); 
+        return true; 
     }
+    return false;
 }
