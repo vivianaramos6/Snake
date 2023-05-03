@@ -99,7 +99,6 @@ void Snake::checkSelfCrash() {
 void Snake::grow() {
     vector<int> newSegment = this->getTail();
     this->body.push_back(newSegment);
-    bodyCounter+=10; //adds 10 to the score when the body grows.  
 }
 
 //snake looses one piece

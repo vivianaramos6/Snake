@@ -4,6 +4,7 @@
 #include "Snake.h"
 #include "ofMain.h"
 #include "ofTrueTypeFont.h"
+#include <string>
 
 class GameState : public State {
 
@@ -30,15 +31,27 @@ class GameState : public State {
         
         bool foodSpawned = false;
 
+        int score; 
+
         int currentFoodX;
         int currentFoodY;
 
         int boardSizeWidth, boardSizeHeight;
         int cellSize; // Pixels
 
-        ofTrueTypeFont score; 
+        ofTrueTypeFont scoreText; 
         ofImage continueButton;
 
         bool setNotPaused() {return paused=false;}
+
+        string powerup;
+        ofTrueTypeFont powerupText;
+
+        bool speedOn;
+        bool betterApple;
+        int timer;
+        int fps; 
+
+
 
 };

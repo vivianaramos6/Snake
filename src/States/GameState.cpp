@@ -7,7 +7,12 @@ GameState::GameState() {
     boardSizeWidth = 64;
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
-    score.load("gameFont.ttf", 15);
+    scoreText.load("gameFont.ttf", 15);
+    powerupText.load("gameFond.ttf", 15);
+    speedOn = false;
+    powerup = "";
+    fps = 0;
+    score = 0;
     
 }
 //--------------------------------------------------------------
@@ -21,6 +26,12 @@ void GameState::reset() {
     foodSpawned = false;
     setFinished(false);
     setNextState("");
+    speedOn = false;
+    betterApple=false;
+    powerup = "";
+    fps = 0;
+    score = 0;
+
 }
 //--------------------------------------------------------------
 void GameState::update() {
@@ -38,13 +49,31 @@ void GameState::update() {
     if(snake->getHead()[0] == currentFoodX && snake->getHead()[1] == currentFoodY) {
         snake->grow();
         foodSpawned = false;
+        score += 10;
     }
-
     foodSpawner();
-    if(ofGetFrameNum() % 10 == 0) {
+
+    if (speedOn){
+        fps = 5;
+        if (ofGetElapsedTimef() - timer >= 15){
+            speedOn = false;
+        }
+    }
+    else {fps = 10;}
+    if(ofGetFrameNum() % fps == 0) {
         snake->update();
     }
     }
+    if (score == 60){
+        powerup = "SPEEDON!";
+    }
+    else if(score == 110){
+        powerup="BETTERAPPLE!";
+          
+         
+    }
+
+    
 
 }
 //--------------------------------------------------------------
@@ -52,13 +81,14 @@ void GameState::draw() {
     drawBoardGrid();
     snake->draw();
     drawFood();
-    score.drawString("Score:" + to_string(snake->getCounter()), ofGetWidth()/2 - 45, 25);
+    scoreText.drawString("Score:" + to_string(score), ofGetWidth()/2 - 45, 25);
+    powerupText.drawString("PowerUP" + powerup, 25, 25);
     
 }
 //--------------------------------------------------------------
 void GameState::keyPressed(int key) {
 
-    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN && key !='u' && key != 'a' && !-'p') { return; }
+    if(key != OF_KEY_LEFT && key != OF_KEY_RIGHT && key != OF_KEY_UP && key != OF_KEY_DOWN && key !='u' && key != 'a' && key !='p' && key !='b') { return; }
 
     switch(key) {
         case OF_KEY_LEFT:
@@ -80,7 +110,7 @@ void GameState::keyPressed(int key) {
             }
             break;
         case 'a':
-            snake->addTen();
+            score+=10;
             break;
         case 'p':
          this->setNextState("PauseState");
@@ -89,6 +119,21 @@ void GameState::keyPressed(int key) {
         
         
         break;
+        case 'b':
+        if(powerup!=""){
+            if(powerup=="SPEEDON!"){
+                speedOn=true;
+                timer=ofGetElapsedTimef();
+                
+            }
+            else if(powerup=="BETTERAPPLE!"){
+                snake->grow();
+                snake->grow();
+                 powerup="";
+            }
+            powerup="";
+        } 
+        
     }
 }
 //--------------------------------------------------------------
@@ -110,11 +155,26 @@ void GameState::foodSpawner() {
 }
 //--------------------------------------------------------------
 void GameState::drawFood() {
-    ofSetColor(ofColor::red);
-    if(foodSpawned) {
+   
+    if(foodSpawned && score!=50 && score!=100 && score!=150) {
+         ofSetColor(ofColor::red);
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
     }
+    else if(foodSpawned && score==50){
+         ofSetColor(ofColor::yellow);
+        ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+
+    }
+    else if(foodSpawned && score==100){
+         ofSetColor(ofColor::orange);
+        ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
 }
+ else if(foodSpawned && score==150){
+         ofSetColor(ofColor::pink);
+        ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+ }
+}
+
 //--------------------------------------------------------------
 void GameState::drawStartScreen() {
     ofSetColor(ofColor::black);

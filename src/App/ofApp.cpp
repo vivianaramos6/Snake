@@ -25,8 +25,7 @@ void ofApp::update(){
         if(currentState->getNextState() == "GameState") {
             if(fromPause){
                 fromPause = false;
-                // music.play();
-                // music.setLoop(true);
+                
                 currentState = gameState;
                 currentState->setNextState("");
                 currentState->setFinished(false);
