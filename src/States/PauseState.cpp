@@ -26,7 +26,7 @@ void PauseState::draw() {
     ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
 
     ofSetColor(255);
-        continueButton.draw(ofGetWidth()/2-95,ofGetHeight()/2,200,200);
+        continueButton.draw(ofGetWidth()/2-105,ofGetHeight()/2,200,200);
     
 
     }

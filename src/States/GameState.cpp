@@ -77,7 +77,7 @@ void GameState::update() {
         snake->update();
         for (StaticEntity* obs : obstacles){
             if (obs->checkCrashed(snake)){
-                this->setNextState("MenuState");
+                this->setNextState("LoseState");
                 this->setFinished(true);
                 return;
             }

@@ -40,11 +40,6 @@ void Snake::update() {
         }
     }
 
-    while (godMode){
-        if (oldHead[0] < 0 || oldHead[0]>=boardSizeWidth - 1 || oldHead[1] < 0 || oldHead[1] >= boardSizeHeight - 1){
-            return; 
-        }
-    }
     if(oldHead[0] == -1 || oldHead[0] == boardSizeWidth || oldHead[1] == -1 || oldHead[1] == boardSizeHeight) {
         crashed = true;
         return;
