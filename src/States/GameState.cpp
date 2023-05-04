@@ -80,8 +80,9 @@ void GameState::update() {
 
     if (speedOn){
         fps = 5;
+        powerup = "";
         if (ofGetElapsedTimef() - timer >= 15){
-            powerup = "";
+            speedOn = false;
         }
     }
     else {fps = 10;}
@@ -210,7 +211,7 @@ void GameState::keyPressed(int key) {
                 if(powerup==" SPEEDON!"){
                     speedOn=true;
                     timer=ofGetElapsedTimef();
-                speedStop = false; 
+                    speedStop = false; 
                     break;
                 
             }
