@@ -56,7 +56,11 @@ class GameState : public State {
         ofTrueTypeFont powerupText;
 
         bool speedOn;
+        bool speedStop;
         bool betterApple;
+        bool betterAppleStop;
+        bool godMode;
+        bool godModeStop;
         int timer;
         int fps;
 

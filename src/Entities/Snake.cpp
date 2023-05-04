@@ -31,14 +31,20 @@ void Snake::update() {
         }
         case RIGHT: {
             this->body[0][0] += 1;
+
             break;
         }
         case UP: {
-            this->body[0][1] -= 1;      
+            this->body[0][1] -= 1;     
             break;
         }
     }
 
+    while (godMode){
+        if (oldHead[0] < 0 || oldHead[0]>=boardSizeWidth - 1 || oldHead[1] < 0 || oldHead[1] >= boardSizeHeight - 1){
+            return; 
+        }
+    }
     if(oldHead[0] == -1 || oldHead[0] == boardSizeWidth || oldHead[1] == -1 || oldHead[1] == boardSizeHeight) {
         crashed = true;
         return;
@@ -56,7 +62,10 @@ void Snake::update() {
     }
 
     checkSelfCrash();
-}
+   
+
+    }
+
 
 void Snake::draw() {
     for (int i = 0; i < body.size(); i++) {
@@ -72,6 +81,7 @@ void Snake::draw() {
 }
 
 void Snake::changeDirection(Direction d) {
+    
 
     if(this->direction == LEFT and d == RIGHT)
         return;
@@ -86,13 +96,15 @@ void Snake::changeDirection(Direction d) {
 }
 
 void Snake::checkSelfCrash() {
-    std::vector<std::vector<int>> snake = this->body;
-    vector<int> head = snake[0];
-    for(int i = 1; i < snake.size(); i++) {
-        if(head[0] == snake[i][0] and head[1] == snake[i][1]) {
-            crashed = true;
-            return;
+    if (!godMode){
+        std::vector<std::vector<int>> snake = this->body;
+        vector<int> head = snake[0];
+        for(int i = 1; i < snake.size(); i++) {
+            if(head[0] == snake[i][0] and head[1] == snake[i][1]) {
+                crashed = true;
+                return;
         }
+    }
     }
 }
 
@@ -106,4 +118,6 @@ void Snake::shrink(){
      vector<int> newSegment = this->getTail();
     this->body.pop_back();
 }
+
+
 

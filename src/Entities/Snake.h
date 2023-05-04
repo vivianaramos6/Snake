@@ -17,6 +17,7 @@ private:
     int boardSizeWidth, boardSizeHeight; 
     int segmentSize;
     bool crashed;
+    bool godMode = false;
 
 public:
     Snake(int segmentSize, int boardSizeW, int boardSizeH);
@@ -45,4 +46,14 @@ public:
     std::vector<std::vector<int>> getBody() {
         return this->body;
     } 
+    
+    bool getGodMode(){
+        return godMode; 
+    }
+    bool setGodMode(bool x){
+        godMode = x;
+        return godMode;  
+    }
+
+    bool stopped=false;
 };

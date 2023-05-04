@@ -15,8 +15,9 @@ GameState::GameState() {
         obstacles.push_back(new StaticEntity(obstacleX*25, obstacleY*25, cellSize, obstacleType));
         
     }
-    powerupText.load("gameFond.ttf", 15);
+    powerupText.load("gameFont.ttf", 15);
     speedOn = false;
+    godMode = false;
     powerup = "";
     fps = 0;
     score = 0;
@@ -46,16 +47,17 @@ void GameState::reset() {
 }
 //--------------------------------------------------------------
 void GameState::update() {
-    if(paused){
-        return;
-    }
-    else{
+    
+    
 
     if(snake->isCrashed()) {
         this->setNextState("LoseState");
         this->setFinished(true);
         return;
     }
+    
+    
+    
 
     if(snake->getHead()[0] == currentFoodX && snake->getHead()[1] == currentFoodY) {
         snake->grow();
@@ -67,7 +69,7 @@ void GameState::update() {
     if (speedOn){
         fps = 5;
         if (ofGetElapsedTimef() - timer >= 15){
-            speedOn = false;
+            powerup = "";
         }
     }
     else {fps = 10;}
@@ -81,37 +83,27 @@ void GameState::update() {
             }
         }
     }
-    }
-    if (score == 60){
-        powerup = "SPEEDON!";
-    }
-    else if(score == 110){
-        powerup="BETTERAPPLE!";
-          
-         
-    }
 
+    if (godMode){
+        if (ofGetElapsedTimef()-timer <= 10){
+            snake->setGodMode(true);
+        } else {
+            snake->setGodMode(false);
+            godMode = false;
+            powerup = "";
+        } 
+    }
     
-    if (decay == 0){
-        foodSpawned = false;
-        decay = ofGetFrameRate() * 10;  
-        red = 255;
-        blue = 0;
-        green = 0;
+    if (score == 60 && speedStop){
+        powerup = " SPEEDON!";
     }
-    decay--;
-    if (ofGetFrameNum()%4  == 0){
-            red -= 0.8;
-            blue += 0.8;
-            green += 0.8;
-    }
-    if (score == 60){
-        powerup = "SPEEDON!";
-    }
-    else if(score == 110){
-        powerup="BETTERAPPLE!";
+    else if(score == 110 && betterAppleStop){
+        powerup=" BETTERAPPLE!";
           
          
+    }
+    else if(score==160 && godModeStop){
+        powerup=" GODMODE!";
     }
 
     
@@ -180,19 +172,26 @@ void GameState::keyPressed(int key) {
         break;
         case 'b':
         if(powerup!=""){
-            if(powerup=="SPEEDON!"){
+            if(powerup==" SPEEDON!"){
                 speedOn=true;
                 timer=ofGetElapsedTimef();
+                speedStop = false; 
                 
             }
-            else if(powerup=="BETTERAPPLE!"){
+            else if(powerup==" BETTERAPPLE!"){
                 snake->grow();
                 snake->grow();
-                 powerup="";
+                powerup="";
+                betterAppleStop = false;
+            }
+            else if(powerup==" GODMODE!"){
+                godMode = true;
+                timer = ofGetElapsedTimef();
+                godModeStop = false; 
             }
             powerup="";
         } 
-        
+        break; 
     }
 }
 //--------------------------------------------------------------
@@ -221,15 +220,18 @@ void GameState::drawFood() {
     else if(foodSpawned && score==50){
          ofSetColor(ofColor::yellow);
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+        speedStop = true;
 
     }
     else if(foodSpawned && score==100){
          ofSetColor(ofColor::orange);
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+        betterAppleStop = true;
 }
  else if(foodSpawned && score==150){
          ofSetColor(ofColor::pink);
         ofDrawRectangle(currentFoodX*cellSize, currentFoodY*cellSize, cellSize, cellSize);
+        godModeStop = true;
  }
 }
 
