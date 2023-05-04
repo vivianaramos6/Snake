@@ -60,4 +60,7 @@ class GameState : public State {
         int red = 255;
         int blue = 0;
         int green = 0;
+
+        vector<int> rows;
+        vector<vector<int>> map; 
 };

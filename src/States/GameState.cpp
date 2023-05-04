@@ -8,12 +8,23 @@ GameState::GameState() {
     boardSizeHeight = 36;
     snake = new Snake(cellSize, boardSizeWidth, boardSizeHeight);
     scoreText.load("gameFont.ttf", 15);
+    
     powerupText.load("gameFond.ttf", 15);
     powerupON = false; 
     speedOn = false;
     powerup = "";
     fps = 0;
     score = 0;
+
+    for (int rowsIT = 0; rowsIT <= boardSizeWidth; rowsIT++){
+        for (int columns = 0; columns <= boardSizeHeight; columns++){
+            rows.push_back(0);
+        }
+        map.push_back(rows);
+        rows.clear();
+    }
+
+
     
 }
 //--------------------------------------------------------------
@@ -100,6 +111,18 @@ void GameState::update() {
             green += 0.3;
     }
 
+    vector<vector<int>> body = snake->getBody();
+    for (int bodyIT = 0; bodyIT < body.size(); bodyIT++){
+        for (int rowsIT = 0; rowsIT<map.size();rowsIT++){
+            for (int columns = 0; columns < map[rowsIT].size(); columns++){
+                if (body[bodyIT][0] == columns && body[bodyIT][1]==rowsIT){
+                    map[rowsIT][columns] = 1;
+                    break; 
+                } else { map[rowsIT][columns] = 0;}
+            }
+        }
+    }
+
 }
 //--------------------------------------------------------------
 void GameState::draw() {
@@ -110,6 +133,12 @@ void GameState::draw() {
     ofSetColor(255,0,0);
     scoreText.drawString("Score:" + to_string(score), ofGetWidth()/2 - 45, 25);
     powerupText.drawString("PowerUP" + powerup, 25, 25);
+    ofSetColor(255);
+    // for (int rowsIT = 0; rowsIT<map.size();rowsIT++){
+    //     for (int columns = 0; columns < map[rowsIT].size(); columns++){
+    //         ofDrawBitmapString(to_string(map[rowsIT][columns]), rowsIT*25, columns*25);
+    //     }
+    // }
     
 }
 //--------------------------------------------------------------
