@@ -53,6 +53,7 @@ class GameState : public State {
         bool setNotPaused() {return paused=false;}
 
         string powerup;
+        bool powerupON;
         ofTrueTypeFont powerupText;
 
         bool speedOn;
@@ -71,4 +72,7 @@ class GameState : public State {
         int red = 255;
         int blue = 0;
         int green = 0;
+
+        vector<int> rows;
+        vector<vector<int>> map; 
 };
